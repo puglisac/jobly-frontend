@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 
-import { Button, Form, Label, Input, FormGroup } from 'reactstrap';
+import { Form, Input, FormGroup } from 'reactstrap';
 /** 
  *
  * Has state for the name/quantity of the item; on submission,

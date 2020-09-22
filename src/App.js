@@ -9,6 +9,8 @@ import LoginForm from './LoginForm';
 import JobList from './JobList';
 import CompanyList from './CompanyList'
 import UserContext from "./UserContext";
+import Profile from './Profile';
+import CompanyDetails from './CompanyDetails';
 
 
 function App() {
@@ -45,11 +47,14 @@ function App() {
 						<Route exact path="/companies">
 							<CompanyList/>
 						</Route>
-						<Route path="/companies/:handle">
-							<CompanyList/>
+						<Route exact path="/companies/:handle">
+							<CompanyDetails/>
 						</Route>
 						<Route path="/jobs/:id">
 							<JobList/>
+						</Route>
+						<Route path="/users/:username">
+							<Profile />
 						</Route>
 						<Route>
 							<p>Hmmm. I can't seem to find what you're looking for.</p>

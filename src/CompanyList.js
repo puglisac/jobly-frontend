@@ -7,24 +7,19 @@ import FilterForm from './FilterForm';
 const CompanyList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [companies, setCompanies]=useState();
-    const {handle} = useParams();
 
     const search = async (text) => {
         const res = await JoblyApi.request(`companies/?search=${text}`);
         setCompanies(res.companies)
     }
-    const getCompanies= async (handle="") => {
-            const res = await JoblyApi.request(`companies/${handle}`);
-            if (handle){setCompanies([res.company])}
-            else{
+    const getCompanies= async () => {
+            const res = await JoblyApi.request(`companies/`);
                 setCompanies(res.companies);
-            }
-			setIsLoading(false);
+			    setIsLoading(false);
 	}
 	useEffect(()=>{
-        getCompanies(handle)}, [handle]
+        getCompanies()}, []
     );
-
 	if(isLoading){
 		return <p>Loading &hellip;</p>;
 	}
@@ -41,6 +36,7 @@ const CompanyList = () => {
         numEmployees={c.num_employees} 
         logoUrl={c.logo_url}
         />))}
+
         </div>
     )
 }

@@ -9,7 +9,7 @@ const JobCard = ({id, title, salary, equity, company}) =>{
 return(
 
     <Card className="m-4">
-        <CardHeader><Link to={`/companies/${company}`}>{company}</Link> is hiring</CardHeader>
+        {company ? <CardHeader><Link to={`/companies/${company}`}>{company}</Link> is hiring</CardHeader>:null}
         <CardBody>
         <CardTitle><Link to={`/jobs/${id}`}>{title}</Link></CardTitle>
             <CardText>Salary: {salary}</CardText>

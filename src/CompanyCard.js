@@ -1,9 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import { Card, Button, CardHeader, CardBody,
     CardTitle, CardText } from 'reactstrap';
 
-const CompanyCard = ({handle, name, description, logoUrl, numEmployees}) =>{
+
+const CompanyCard = ({handle, name, description, logoUrl, numEmployees, toggleJobs, toggleText}) =>{
 
 
 return(
@@ -14,7 +15,7 @@ return(
             <CardTitle>{description}</CardTitle>
             {numEmployees ? <CardText>Employees: {numEmployees}</CardText>: null}
             <img src={logoUrl} width="50px" className="float-right" alt="company logo"></img>
-            <Button>See Jobs!</Button>
+            {toggleJobs ? <Button onClick={toggleJobs}>{toggleText}</Button>:null}
         </CardBody>
     </Card>
 )
