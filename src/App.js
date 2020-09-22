@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./App.css";
+import JoblyApi from './JoblyApi'
+import NavBar from "./NavBar";
+import Home from "./Home";
+import SignupForm from './SignupForm';
+import LoginForm from './LoginForm';
+import JobList from './JobList';
+import CompanyList from './CompanyList'
+import UserContext from "./UserContext";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [currUser, setCurrUser]=useState()
+
+	const login=async (username, password)=>{
+		const resp = await JoblyApi.request("login", {username, password}, "post");
+		setCurrUser(resp);
+	}
+	const signup=async (username, password, firstName, lastName, email)=>{
+		const resp = await JoblyApi.request("users", {username, password, firstName, lastName, email}, "post");
+		setCurrUser(resp);
+	}
+	return (
+
+		<UserContext.Provider value={currUser}>
+		<div className="App">
+			<NavBar currUser={currUser}/>
+			<BrowserRouter>
+				<main>
+					<Switch>
+						<Route exact path="/">
+							{currUser ? null : <Home/>}
+						</Route>
+						<Route exact path="/signup">
+							<SignupForm signup={signup} />
+						</Route>
+						<Route exact path="/login">
+							<LoginForm login={login}/>
+						</Route>
+						<Route exact path="/jobs">
+							<JobList/>
+						</Route>
+						<Route exact path="/companies">
+							<CompanyList/>
+						</Route>
+						<Route path="/companies/:handle">
+							<CompanyList/>
+						</Route>
+						<Route path="/jobs/:id">
+							<JobList/>
+						</Route>
+						<Route>
+							<p>Hmmm. I can't seem to find what you're looking for.</p>
+						</Route>
+					</Switch>
+				</main>
+			</BrowserRouter>
+		</div>
+		</UserContext.Provider>
+	);
 }
 
 export default App;
