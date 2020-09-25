@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Label, Input, FormGroup } from "reactstrap";
 import "./SignupForm.css";
-import { useHistory } from "react-router-dom";
 
 /** 
  *
