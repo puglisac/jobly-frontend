@@ -1,10 +1,30 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
+import React,  {useContext} from 'react';
+import {Link, useHistory} from 'react-router-dom';
+import JoblyApi from './JoblyApi'
+import UserContext from './UserContext'
 
 import { Card, Button, CardHeader, CardBody,
     CardTitle, CardText } from 'reactstrap';
 
-const JobCard = ({id, title, salary, equity, company}) =>{
+const JobCard = ({id, title, salary, equity, company, userJobs}) =>{
+
+const currUser = useContext(UserContext);
+const history = useHistory();
+const checkStatus=(jobId)=>{
+    return userJobs.some(j=>j.id===jobId)
+ }
+
+
+const apply = async () =>{
+    try {
+        await JoblyApi.request(`jobs/${id}/apply`, {username: currUser.username}, "post")
+        alert("Applied!")
+        history.push('/')
+    }catch(e){
+       alert(e)
+    }
+}
+
 
 return(
 
@@ -14,7 +34,7 @@ return(
         <CardTitle><Link to={`/jobs/${id}`}>{title}</Link></CardTitle>
             <CardText>Salary: {salary}</CardText>
             <CardText>Equity: {equity}</CardText>
-            <Link to={`/jobs/${id}`}><Button>Apply!</Button></Link> 
+            {checkStatus(id)?null:<Button onClick={apply}>Apply!</Button>}
         </CardBody>
     </Card>
 )

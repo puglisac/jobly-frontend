@@ -6,63 +6,47 @@ import {
 	NavbarBrand,
 	Nav,
 	NavItem,
+	Button,
 	NavLink
 } from "reactstrap";
+import './NavBar.css'
 
-const NavBar = ({currUser}) => {
+const NavBar = ({currUser, logout}) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 
-	const INITIAL_STATE = { text:""};
-	const [formData, setFormData] = useState(INITIAL_STATE);
-  
-	const handleSubmit = evt => {
-	  evt.preventDefault();
-	  const {text}=formData;
-	//   search(text)
-	  setFormData(INITIAL_STATE);
-	};
-  
-	/** Update local state w/curr state of input elem */
-  
-	const handleChange = evt => {
-	  const { name, value }= evt.target;
-	  setFormData(fData => ({
-		...fData,
-		[name]: value
-	  }));
-	};
+
+
+
 
 	const toggle = () => setIsOpen(!isOpen);
 	return (
 		<div>
-			<Navbar color="light" light expand="md">
+			<Navbar className="NavBar" light  expand="md">
 				<NavbarBrand href="/">Jobly</NavbarBrand>
 				<NavbarToggler onClick={toggle} />
 				<Collapse isOpen={isOpen} navbar>
 					<Nav className="mr-auto" navbar>
 						{currUser ? (
 						<>
-						<NavItem>
+						<NavItem active={window.location.pathname === "/jobs"}>
 							<NavLink href="/jobs">Jobs</NavLink>
 						</NavItem>
-						<NavItem>
+						<NavItem active={window.location.pathname === "/companies"}>
 							<NavLink href="/companies">Companies</NavLink>
 						</NavItem> 
-						<NavItem>
-							<form onSubmit={handleSubmit} class="form-inline my-2 my-lg-0">
-      						<input name="text" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={handleChange}/>
-      						<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-    						</form>
-						</NavItem>
+						<NavItem active={window.location.pathname === `/users/${currUser.username}`}>
+							<NavLink href={`/users/${currUser.username}`}>{currUser.username}</NavLink>
+						</NavItem> 
+							<Button  onClick={logout}>Logout</Button>
 						</>
 						)
 						:(
 						<>
-						<NavItem>
+						<NavItem active={window.location.pathname === "/login"}>
 							<NavLink href="/login">login</NavLink>
 						</NavItem>
-						<NavItem>
-							<NavLink href="/users">Sign Up</NavLink>
+						<NavItem active={window.location.pathname === "/signup"}>
+							<NavLink href="/signup">Sign Up</NavLink>
 						</NavItem>
 						</>
 						)}

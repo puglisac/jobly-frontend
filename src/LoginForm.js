@@ -1,5 +1,4 @@
 import React, { useState} from "react";
-import {useHistory} from 'react-router-dom'
 import { Button, Form, Label, Input, FormGroup } from 'reactstrap';
 /** 
  *
@@ -9,7 +8,6 @@ import { Button, Form, Label, Input, FormGroup } from 'reactstrap';
  */
 
 const LoginForm = ({login}) => {
-  const history = useHistory();
   const INITIAL_STATE = { username:"", password: ""};
   const [formData, setFormData] = useState(INITIAL_STATE);
 
@@ -18,7 +16,6 @@ const LoginForm = ({login}) => {
     const {username, password}=formData;
     login(username, password);
     setFormData(INITIAL_STATE);
-    history.push("/");
   };
 
   /** Update local state w/curr state of input elem */
@@ -37,7 +34,7 @@ const LoginForm = ({login}) => {
 <section className=" SignupForm col">
     <Form onSubmit={handleSubmit}>
       <FormGroup >
-      <h5 className="font-weight-bold text-center">Sign Up</h5>
+      <h5 className="font-weight-bold text-center">Log In</h5>
       <Label htmlFor="username">Username:</Label>
       <Input className="text-center"
         id="username"

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { Card, Button, CardHeader, CardBody,
     CardTitle, CardText } from 'reactstrap';
 

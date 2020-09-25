@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import JoblyApi from './JoblyApi'
 import NavBar from "./NavBar";
@@ -11,50 +11,83 @@ import CompanyList from './CompanyList'
 import UserContext from "./UserContext";
 import Profile from './Profile';
 import CompanyDetails from './CompanyDetails';
-
+import ProfileEditForm from './ProfileEditForm'
+import useLocalStorage from './useLocalStorage'
 
 function App() {
-	const [currUser, setCurrUser]=useState()
+	const [currUser, setCurrUser]=useLocalStorage("currUser", null);
+	const [token, setToken]=useLocalStorage("token", null);
+
 
 	const login=async (username, password)=>{
-		const resp = await JoblyApi.request("login", {username, password}, "post");
-		setCurrUser(resp);
+		try{
+			const resp = await JoblyApi.request("login", {username, password}, "post");
+			setToken(resp.token);
+			setCurrUser(resp.user);
+
+		} catch(e){
+			alert(e);
+		}
+
 	}
-	const signup=async (username, password, firstName, lastName, email)=>{
-		const resp = await JoblyApi.request("users", {username, password, firstName, lastName, email}, "post");
-		setCurrUser(resp);
+	const signup=async (username, password, first_name, last_name, email)=>{
+		try{
+			const resp = await JoblyApi.request("users", {username, password, first_name, last_name, email}, "post");
+			setToken(resp.token);
+			setCurrUser( resp.user);
+		}catch(e){
+			alert(e);
+		}
+	
+	}
+	const logout = () =>{
+		setToken(null);
+		setCurrUser(null);
+	}
+
+	const editProfile=async (username, password, first_name, last_name, email, photo_url)=>{
+		try{
+			const resp = await JoblyApi.request(`users/${username}`, {password, first_name, last_name, email, photo_url}, "patch")
+			setCurrUser(resp.user)
+		}catch(e){
+			alert(e)
+		}
 	}
 	return (
-
 		<UserContext.Provider value={currUser}>
 		<div className="App">
-			<NavBar currUser={currUser}/>
+			
 			<BrowserRouter>
+			<NavBar currUser={currUser} logout={logout}/>
 				<main>
 					<Switch>
 						<Route exact path="/">
-							{currUser ? null : <Home/>}
+							{currUser ? <Redirect to="/jobs"/> : <Home/>}
 						</Route>
 						<Route exact path="/signup">
-							<SignupForm signup={signup} />
+						{currUser ? <Redirect to="/jobs"/> : <SignupForm signup={signup} />}
 						</Route>
 						<Route exact path="/login">
-							<LoginForm login={login}/>
+						{currUser ? <Redirect to="/jobs"/> :<LoginForm login={login}/>}
 						</Route>
+
 						<Route exact path="/jobs">
-							<JobList/>
+						{currUser ? <JobList/>: <Redirect to="/"/>}
 						</Route>
 						<Route exact path="/companies">
-							<CompanyList/>
+						{currUser ? <CompanyList/>: <Redirect to="/"/>}
 						</Route>
 						<Route exact path="/companies/:handle">
-							<CompanyDetails/>
+						{currUser ? <CompanyDetails/>: <Redirect to="/"/>}
 						</Route>
-						<Route path="/jobs/:id">
-							<JobList/>
+						<Route exact path="/jobs/:id">
+						{currUser ? <JobList/>: <Redirect to="/"/>}
 						</Route>
-						<Route path="/users/:username">
-							<Profile />
+						<Route exact path="/users/:username">
+						{currUser ? <Profile/>: <Redirect to="/"/>}
+						</Route>
+						<Route exact path="/users/:username/edit">
+						{currUser ? <ProfileEditForm editProfile={editProfile}/>: <Redirect to="/"/>}
 						</Route>
 						<Route>
 							<p>Hmmm. I can't seem to find what you're looking for.</p>
