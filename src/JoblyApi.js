@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
 class JoblyApi {
 	static async request(endpoint, paramsOrData = {}, verb = "get") {
-		paramsOrData._token = JSON.parse(window.localStorage.getItem('token'));
+		paramsOrData._token = JSON.parse(window.localStorage.getItem("token"));
 		// console.debug("API Call:", endpoint, paramsOrData, verb);
 		try {
 			const res = await axios({

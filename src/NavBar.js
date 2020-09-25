@@ -58,3 +58,4 @@ const NavBar = ({currUser, logout}) => {
 };
 
 export default NavBar;
+ 
