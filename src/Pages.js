@@ -12,4 +12,5 @@
         return page
     }
 
+
     export default pages
