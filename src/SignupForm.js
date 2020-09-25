@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Label, Input, FormGroup } from "reactstrap";
 import "./SignupForm.css";
+import { useHistory } from "react-router-dom";
 
 /** 
  *
@@ -10,6 +11,7 @@ import "./SignupForm.css";
  */
 
 const SignupForm = ({ signup }) => {
+	const history = useHistory();
 	const INITIAL_STATE = { username: "", password: "", firstName: "", lastName: "", email: "" };
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 
@@ -17,7 +19,7 @@ const SignupForm = ({ signup }) => {
 		evt.preventDefault();
 		const { username, password, firstName, lastName, email } = formData;
 		signup(username, password, firstName, lastName, email);
-		setFormData(INITIAL_STATE);
+		history.push("/");
 	};
 
 	/** Update local state w/curr state of input elem */

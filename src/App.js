@@ -31,7 +31,7 @@ function App() {
 		try {
 			const resp = await JoblyApi.request("users", { username, password, first_name, last_name, email }, "post");
 			setToken(resp.token);
-			setCurrUser(resp.user);
+			setCurrUser(resp.newUser);
 		} catch (e) {
 			alert(e);
 		}
