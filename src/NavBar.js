@@ -14,10 +14,6 @@ import './NavBar.css'
 const NavBar = ({currUser, logout}) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 
-
-
-
-
 	const toggle = () => setIsOpen(!isOpen);
 	return (
 		<div>

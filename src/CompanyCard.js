@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Card, Button, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
 
+// a card with company info
+
 const CompanyCard = ({ handle, name, description, logoUrl, numEmployees, toggleJobs, toggleText }) => {
 	return (
 		<Card className="m-4">

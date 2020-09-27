@@ -1,18 +1,18 @@
 import React from "react";
-import { Pagination, Button, PaginationLink } from "reactstrap";
+import { Pagination, PaginationLink } from "reactstrap";
 
 const Paginate = ({ handleClick, length, start }) => {
 	return (
-		<Pagination aria-label="Page navigation example">
+		<Pagination className="nav justify-content-center" aria-label="Page navigation">
 			{start ? (
-				<Button onClick={() => handleClick(false)}>
+				<div onClick={() => handleClick(false)}>
 					<PaginationLink previous />
-				</Button>
+				</div>
 			) : null}
 			{length < 20 ? null : (
-				<Button onClick={() => handleClick(true)}>
+				<div onClick={() => handleClick(true)}>
 					<PaginationLink next />
-				</Button>
+				</div>
 			)}
 		</Pagination>
 	);

@@ -13,6 +13,7 @@ const SignupForm = ({ signup }) => {
 	const INITIAL_STATE = { username: "", password: "", firstName: "", lastName: "", email: "" };
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 
+	// signs up a user on submit
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		const { username, password, firstName, lastName, email } = formData;

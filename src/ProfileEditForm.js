@@ -24,6 +24,7 @@ const ProfileEditForm = ({ editProfile }) => {
 
 	const history = useHistory();
 
+	// updates a user profile on submit
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		const { firstName, lastName, email, password, image } = formData;

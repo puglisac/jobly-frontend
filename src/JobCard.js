@@ -8,10 +8,13 @@ import { Card, Button, CardHeader, CardBody, CardTitle, CardText } from "reactst
 const JobCard = ({ id, title, salary, equity, company, userJobs }) => {
 	const currUser = useContext(UserContext);
 	const history = useHistory();
+
+	// check if user has applied to job
 	const checkStatus = (jobId) => {
 		return userJobs.some((j) => j.id === jobId);
 	};
 
+	// apply for a job on click
 	const apply = async () => {
 		try {
 			await JoblyApi.request(`jobs/${id}/apply`, { username: currUser.username }, "post");

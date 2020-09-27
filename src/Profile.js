@@ -5,13 +5,16 @@ import UserContext from "./UserContext";
 
 const Profile = () => {
 	const history = useHistory();
+	// directs to profile edit page
 	const handleClick = () => {
 		history.push(`/users/${currUser.username}/edit`);
 	};
 
+	// get username and user from params and context
 	const { username } = useParams();
 	const currUser = useContext(UserContext);
 
+	// redirects if logged in user tries to access another user's profile
 	if (username !== currUser.username) {
 		return <Redirect to="/" />;
 	}

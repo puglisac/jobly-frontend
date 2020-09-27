@@ -11,6 +11,7 @@ const LoginForm = ({ login }) => {
 	const INITIAL_STATE = { username: "", password: "" };
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 
+	// login a user of submit
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		const { username, password } = formData;

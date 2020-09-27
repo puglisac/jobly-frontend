@@ -7,7 +7,7 @@ import { Form, Input, FormGroup } from "reactstrap";
  * sends {name, qty} to fn rec'd from parent.
  *
  */
-
+// search for filtering jobs and companies
 const FilterForm = ({ search }) => {
 	const INITIAL_STATE = { text: "" };
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
