@@ -20,21 +20,6 @@ const JobList = () => {
 		const res = await JoblyApi.request(`jobs/?search=${text}`);
 		setJobs(Pages(res.jobs, start));
 	};
-	const getJobs = async (id = "") => {
-		try {
-			const res = await JoblyApi.request(`jobs/${id}`);
-			if (id) {
-				setJobs([ res.job ]);
-			} else {
-				setJobs(Pages(res.jobs, start));
-			}
-			setUserJobs(await getUserJobs(currUser.username));
-			setIsLoading(false);
-		} catch (e) {
-			alert(e);
-			history.push("/");
-		}
-	};
 
 	const getUserJobs = async (username) => {
 		const user = await JoblyApi.request(`users/${username}`);
@@ -47,9 +32,24 @@ const JobList = () => {
 
 	useEffect(
 		() => {
+			const getJobs = async (id = "") => {
+				try {
+					const res = await JoblyApi.request(`jobs/${id}`);
+					if (id) {
+						setJobs([ res.job ]);
+					} else {
+						setJobs(Pages(res.jobs, start));
+					}
+					setUserJobs(await getUserJobs(currUser.username));
+					setIsLoading(false);
+				} catch (e) {
+					alert(e);
+					history.push("/");
+				}
+			};
 			getJobs(id);
 		},
-		[ id, start ]
+		[ id, start, currUser.username, history ]
 	);
 	if (isLoading || !userJobs) {
 		return <p>Loading &hellip;</p>;

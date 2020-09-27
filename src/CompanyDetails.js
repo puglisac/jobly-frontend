@@ -34,22 +34,22 @@ const CompanyList = () => {
 		setJobsVisible(!jobsVisible);
 	};
 
-	const getCompany = async () => {
-		try {
-			const res = await JoblyApi.request(`companies/${handle}`);
-			setCompany(res.company);
-			setUserJobs(await getUserJobs(currUser.username));
-			setIsLoading(false);
-		} catch (e) {
-			alert(e);
-			history.push("/companies");
-		}
-	};
 	useEffect(
 		() => {
+			const getCompany = async () => {
+				try {
+					const res = await JoblyApi.request(`companies/${handle}`);
+					setCompany(res.company);
+					setUserJobs(await getUserJobs(currUser.username));
+					setIsLoading(false);
+				} catch (e) {
+					alert(e);
+					history.push("/companies");
+				}
+			};
 			getCompany();
 		},
-		[ handle ]
+		[ handle, currUser.username, history ]
 	);
 
 	if (isLoading || !userJobs) {

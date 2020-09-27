@@ -18,17 +18,18 @@ const CompanyList = () => {
 			alert(e);
 		}
 	};
-	const getCompanies = async () => {
-		try {
-			const res = await JoblyApi.request(`companies/`);
-			setCompanies(Pages(res.companies, start));
-			setIsLoading(false);
-		} catch (e) {
-			alert(e);
-		}
-	};
+
 	useEffect(
 		() => {
+			const getCompanies = async () => {
+				try {
+					const res = await JoblyApi.request(`companies/`);
+					setCompanies(Pages(res.companies, start));
+					setIsLoading(false);
+				} catch (e) {
+					alert(e);
+				}
+			};
 			getCompanies();
 		},
 		[ start ]
