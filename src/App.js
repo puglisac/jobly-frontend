@@ -16,7 +16,7 @@ import useLocalStorage from "./useLocalStorage";
 
 function App() {
 	const [ currUser, setCurrUser ] = useLocalStorage("currUser", null);
-	const [ token, setToken ] = useLocalStorage("token", null);
+	const [ , setToken ] = useLocalStorage("token", null);
 
 	const login = async (username, password) => {
 		try {
